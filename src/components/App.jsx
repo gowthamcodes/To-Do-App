@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Header from "./Header";
+import InputArea from "./InputArea";
 import ToDoItem from "./ToDoItem";
 
 function App() {
-  const [inputText, setInputText] = useState("");
   const [items, setItems] = useState([]);
 
-  function handleChange(event) {
-    const newValue = event.target.value;
-    setInputText(newValue);
-  }
-
-  function addItem() {
+  function addItem(input) {
     setItems((prevItems) => {
-      return [...prevItems, inputText];
+      return [...prevItems, input];
     });
-    setInputText("");
   }
 
   function deleteItem(id) {
@@ -25,18 +20,10 @@ function App() {
       });
     });
   }
-
   return (
     <div className="container">
-      <div className="heading">
-        <h1>To-Do List</h1>
-      </div>
-      <div className="form">
-        <input onChange={handleChange} type="text" value={inputText} />
-        <button onClick={addItem}>
-          <span>Add</span>
-        </button>
-      </div>
+      <Header />
+      <InputArea add={addItem} />
       <div>
         <ul>
           {items.map((todoItem, index) => (
